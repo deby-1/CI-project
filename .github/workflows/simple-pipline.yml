@@ -6,7 +6,7 @@ on:
 
 jobs:
   build_stage:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout Code
@@ -28,7 +28,7 @@ jobs:
 
   test_stage:
     needs: build_stage
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout Code
@@ -50,7 +50,7 @@ jobs:
 
   deploy_stage:
     needs: test_stage
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Simulate Deploy
