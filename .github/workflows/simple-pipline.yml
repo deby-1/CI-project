@@ -1,12 +1,10 @@
 name: Classroom CI-CD Demo 2026
 
-
 on:
   push:
     branches: [ main ]
 
 jobs:
-
   build_stage:
     runs-on: ubuntu-latest
 
@@ -19,16 +17,18 @@ jobs:
         with:
           node-version: "22"
           cache: npm
-          cache-dependency-path: chat-application/package-lock.json
+          cache-dependency-path: |
+            chat-application/backend/package-lock.json
+            chat-application/frontend/package-lock.json
 
-      - name: Install Dependenciess
-        run: npm ci
-        working-directory: ./chat-application
+      - name: Install backend dependencies
+        run: npm install --prefix ./chat-application/backend
 
-      - name: Build Application
-        run: npm run build
-        working-directory: ./chat-application
+      - name: Install frontend dependencies
+        run: npm install --prefix ./chat-application/frontend
 
+      - name: Build frontend application
+        run: npm run build --prefix ./chat-application/frontend
 
   test_stage:
     needs: build_stage
@@ -43,15 +43,18 @@ jobs:
         with:
           node-version: "22"
           cache: npm
-          cache-dependency-path: chat-application/package-lock.json
+          cache-dependency-path: |
+            chat-application/backend/package-lock.json
+            chat-application/frontend/package-lock.json
 
-      - name: Install Dependencies
-        run: npm ci
-        working-directory: ./chat-application
+      - name: Install backend dependencies
+        run: npm install --prefix ./chat-application/backend
 
-      - name: Run Tests
-        run: npm test
-        working-directory: ./chat-application
+      - name: Install frontend dependencies
+        run: npm install --prefix ./chat-application/frontend
+
+      - name: Run frontend lint checks
+        run: npm run lint --prefix ./chat-application/frontend
 
   deploy_stage:
     needs: test_stage
