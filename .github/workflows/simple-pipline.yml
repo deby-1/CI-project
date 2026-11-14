@@ -18,13 +18,13 @@ jobs:
           node-version: "22"
 
       - name: Install backend dependencies
-        run: npm install --prefix ./chat-application/backend
+        run: npm install --prefix ./chat-app-source/backend
 
       - name: Install frontend dependencies
-        run: npm install --prefix ./chat-application/frontend
+        run: npm install --prefix ./chat-app-source/frontend
 
       - name: Build frontend application
-        run: npm run build --prefix ./chat-application/frontend
+        run: npm run build --prefix ./chat-app-source/frontend
 
   test_stage:
     needs: build_stage
@@ -40,13 +40,13 @@ jobs:
           node-version: "22"
 
       - name: Install backend dependencies
-        run: npm install --prefix ./chat-application/backend
+        run: npm install --prefix ./chat-app-source/backend
 
       - name: Install frontend dependencies
-        run: npm install --prefix ./chat-application/frontend
+        run: npm install --prefix ./chat-app-source/frontend
 
       - name: Run frontend lint checks
-        run: npm run lint --prefix ./chat-application/frontend
+        run: npm run lint --prefix ./chat-app-source/frontend
 
   deploy_stage:
     needs: test_stage
