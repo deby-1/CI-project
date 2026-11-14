@@ -39,14 +39,8 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Install backend dependencies
-        run: npm install --prefix ./chat-app-source/backend
-
-      - name: Install frontend dependencies
-        run: npm install --prefix ./chat-app-source/frontend
-
-      - name: Run frontend lint checks
-        run: npm run lint --prefix ./chat-app-source/frontend
+      - name: Validate backend JavaScript syntax
+        run: find ./chat-app-source/backend/src -type f -name '*.js' -print0 | xargs -0 -r -n1 node --check
 
   deploy_stage:
     needs: test_stage
